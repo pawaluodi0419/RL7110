@@ -908,8 +908,8 @@ int8_t pattern_eu2_test_dut0()
 
 	case 0x11:
 	{
-		//U2_squelch_Vth trim(DP 90mV, DM 0mV): 0xF1 bit[3:0]
-		i2c_max5825_output(DUT0_IIC_1_ADDR, DAC_MAX5825_ADDR2, DP_LV_DAC2_CH, 90);
+		//U2_squelch_Vth trim(DP 98mV, DM 0mV): 0xF1 bit[3:0]
+		i2c_max5825_output(DUT0_IIC_1_ADDR, DAC_MAX5825_ADDR2, DP_LV_DAC2_CH, 98);
 		i2c_max5825_output(DUT0_IIC_1_ADDR, DAC_MAX5825_ADDR2, DM_LV_DAC2_CH, 0);
 		delay_ms(10);
 
@@ -1051,8 +1051,8 @@ int8_t pattern_eu2_test_dut0()
 
 	case 0x13:
 	{
-		//eU2_squelch_Vth trim(eDP 220mV, eDM 150mV): 0xE9 bit[7:4]
-		i2c_max5825_output(DUT0_IIC_1_ADDR, DAC_MAX5825_ADDR2, eDP_LV_DAC2_CH, 220);
+		//eU2_squelch_Vth trim(eDP 218mV, eDM 150mV): 0xE9 bit[7:4]
+		i2c_max5825_output(DUT0_IIC_1_ADDR, DAC_MAX5825_ADDR2, eDP_LV_DAC2_CH, 218);
 		i2c_max5825_output(DUT0_IIC_1_ADDR, DAC_MAX5825_ADDR2, eDM_LV_DAC2_CH, 150);
 		delay_ms(10);
 

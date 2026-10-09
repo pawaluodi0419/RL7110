@@ -31,7 +31,7 @@ int8_t hub_slb_initial()
 	ret = hub_smbus_write(DUT0_IIC_0_ADDR, HUB2_ADDR, WRITE_PHY, 0x23, 0x06, tx_buf[0], tx_buf[1]);
 	if(ret != 0x00)	return -5;
 
-	tx_buf[0] = 0x32;
+	tx_buf[0] = 0x12;
 	tx_buf[1] = 0xE1;
 	ret = hub_smbus_write(DUT0_IIC_0_ADDR, HUB2_ADDR, WRITE_PHY, 0x23, 0x06, tx_buf[0], tx_buf[1]);
 	if(ret != 0x00)	return -6;

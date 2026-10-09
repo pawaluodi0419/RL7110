@@ -1,7 +1,7 @@
 #ifndef _PATTERN_SLB_TEST_H_
 #define _PATTERN_SLB_TEST_H_
 
-#define	SLB_ERR_CNT	50
+#define	SLB_ERR_CNT	0
 
 int8_t hub_slb_initial();
 

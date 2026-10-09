@@ -39,7 +39,7 @@ int main()
 
     init_platform();
 
-    print("FT2 start!\r\nFPGA Version:RTS5468_FT_merge_first_release_2026092801\r\n");
+    print("FT2 start!\r\nFPGA Version:RTS5468_FT_merge_first_release_2026093002\r\n");
 
     pattern_initial_state_dut0();
 
