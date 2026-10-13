@@ -10,6 +10,9 @@ int8_t pattern_vcon_sw_otp_dut0()
 
 	int8_t ret;
 
+	/* trim: scan i asc(0->15), write i to reg0x07[7:4]|i[3:0], read otp_flag = reg0x05 bit4,
+	 * record first i where flag==1 (flip 0->1), offset = i;
+	 * fail: flag==1 at i==0 (already trig at min) or flag never==1 within 0..15 */
 	switch(dut0.g_type_c_pattern_step)
 	{
 	case 0x00:
@@ -140,7 +143,7 @@ int8_t pattern_vcon_sw_otp_dut0()
 		dut0.g_pattern_timer = 0x5fff;
 		dut0.g_type_c_pattern_step = 0;
 		dut0.g_type_c_pattern_num++;
-		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num);
+		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num, DUT0_PATTERN_TYPEC);
 		print("dut0 pattern_vcon_sw_otp pass!\r\n\r\n\r\n");
 
 		break;

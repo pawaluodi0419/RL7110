@@ -10,6 +10,12 @@ int8_t pattern_vcon_sw_ocp_dut0()
 
 	int8_t ret;
 
+	/* offset trim: CC1/CC2 scan i asc(0->15), write i to reg0x2C[15:12]/[11:8],
+	 * read ocp_kos_flag = reg0x04 bit3/bit2, record first i where flag==0 (flip 1->0), offset = i;
+	 * fail: flag==0 at i==0 (released at min) or never==0 within 0..15
+	 * 350/500mA trim: CC1/CC2 scan i desc(15->0), write i to reg0x07[15:12]/[11:8],
+	 * read ocp_flag = reg0x05 bit6/bit5, record i where flag==1 (flip 0->1), offset = i+1;
+	 * fail: flag==1 at i==15 (trig at max) or never==1 within 15..0 */
 	switch(dut0.g_type_c_pattern_step)
 	{
 	case 0x00:
@@ -662,7 +668,7 @@ int8_t pattern_vcon_sw_ocp_dut0()
 		dut0.g_pattern_timer = 0x5fff;
 		dut0.g_type_c_pattern_step = 0;
 		dut0.g_type_c_pattern_num++;
-		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num);
+		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num, DUT0_PATTERN_TYPEC);
 		print("dut0 pattern_vcon_sw_ocp pass!\r\n\r\n\r\n");
 
 		break;

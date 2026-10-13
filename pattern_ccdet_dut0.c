@@ -72,7 +72,7 @@ int8_t pattern_ccdet_dut0()
 		dut0.g_pattern_timer = 0x5fff;
 		dut0.g_type_c_pattern_step = 0;
 		dut0.g_type_c_pattern_num++;
-		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num);
+		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num, DUT0_PATTERN_TYPEC);
 		print("dut0 pattern_ccdet pass!\r\n\r\n\r\n");
 
 		break;

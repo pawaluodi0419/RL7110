@@ -142,6 +142,7 @@ int8_t pattern_rc_clock_dut0()
 		uint8_t high = 127;
 		uint8_t mid = 0;
 		uint32_t min_diff_fine = 0xFFFFFFFF;
+		uint32_t rc16m_best_freq = 0;
 		uint16_t base_val;
 		uint16_t reg_val;
 
@@ -190,6 +191,7 @@ int8_t pattern_rc_clock_dut0()
 					{
 						min_diff_fine = diff;
 						dut0.g_rc16m_fine_offset = mid;
+						rc16m_best_freq = rc16m_freq;
 					}
 
 					if(rc16m_freq == RC16M_TARGET)
@@ -224,6 +226,8 @@ int8_t pattern_rc_clock_dut0()
 		}
 		xil_printf("dut0 rc16m_fine_offset = %d\r\n\r\n", dut0.g_rc16m_fine_offset);
 
+		if((rc16m_best_freq < RC16M_MIN) || (rc16m_best_freq > RC16M_MAX))	return -1;
+
 		//write best fine offset
 		ret = i2c_read_phy(0x13, 0x00, rx_buf);
 		if(ret != 0)	return -1;
@@ -256,6 +260,7 @@ int8_t pattern_rc_clock_dut0()
 	case 0x05:
 	{
 		uint32_t min_diff = 0xFFFFFFFF;
+		uint32_t rc50m_best_freq = 0;
 		uint16_t base_val;
 		uint16_t reg_val;
 
@@ -302,6 +307,7 @@ int8_t pattern_rc_clock_dut0()
 					{
 						min_diff = diff;
 						dut0.g_rc50m_offset = i;
+						rc50m_best_freq = rc50m_freq;
 					}
 
 					//clear all
@@ -321,6 +327,8 @@ int8_t pattern_rc_clock_dut0()
 			}
 		}
 		xil_printf("dut0 rc50m_offset = %d\r\n\r\n", dut0.g_rc50m_offset);
+
+		if((rc50m_best_freq < RC50M_MIN) || (rc50m_best_freq > RC50M_MAX))	return -1;
 
 		//write best 50M offset
 		ret = i2c_read_phy(0x13, 0x00, rx_buf);
@@ -349,7 +357,7 @@ int8_t pattern_rc_clock_dut0()
 		dut0.g_pattern_timer = 0x5fff;
 		dut0.g_type_c_pattern_step = 0;
 		dut0.g_type_c_pattern_num++;
-		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num);
+		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num, DUT0_PATTERN_TYPEC);
 		print("dut0 pattern_rc_clock pass!\r\n\r\n\r\n");
 
 		break;

@@ -28,7 +28,7 @@ int8_t pattern_setup_dut0()
 
 		if(dut0.g_delay_done_bit == 1)
 		{
-			result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_lrd_pattern_num);
+			result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_lrd_pattern_num, DUT0_PATTERN_LRD);
 
 			dut0.g_delay_control_bit = 0;
 			dut0.g_delay_done_bit = 0;
@@ -69,9 +69,9 @@ int8_t pattern_setup_dut0()
 		if(ret != 0)	return -1;
 		delay_ms(1);
 
-		write_data.bits.cp_lrd_ldo = read_data.bytes[0];
+		write_data.bits.cp_lrd_ldo = (read_data.bytes[1] & 0x07);
 
-		if(read_data.bytes[1] == 0)
+		if(read_data.bytes[0] == 0)
 		{
 		    print("dut0 is new IC!\r\n\r\n");
 		    dut0.g_ft2_retest = 0;
@@ -88,7 +88,7 @@ int8_t pattern_setup_dut0()
 		dut0.g_dut_ver = rx_buf[0];
 		xil_printf("dut0 ic version: 0x%x\r\n\r\n", dut0.g_dut_ver);
 
-		if((dut0.g_dut_ver == 0) && (read_data.bytes[1] == 0))
+		if((dut0.g_dut_ver == 0) && (read_data.bytes[0] == 0))
 		{
 		    dut0.g_lrd_pattern_step++;
 		}
@@ -453,11 +453,12 @@ int8_t pattern_setup_dut0()
 		}
 
 		//LRD_LDO
-		if(read_data.bytes[0] != 0)
+		if(((read_data.bytes[1] & 0x07) == 3) || ((read_data.bytes[1] & 0x07) == 4) || ((read_data.bytes[1] & 0x07) == 5))
 		{
 			reg_val = mdio_master_read(DUT0_MDIO_BASEADDR, 0x11);
 			reg_val &= ~((7 << 8) | (7 << 0));
-			reg_val |= (read_data.bytes[0] << 8) | (read_data.bytes[0] << 0);
+			uint8_t ldo_val = read_data.bytes[1] & 0x07;
+			reg_val |= (ldo_val << 8) | (ldo_val << 0);
 			mdio_master_write(DUT0_MDIO_BASEADDR, 0x11, reg_val);
 			print("dut0 change lrd_ldo!\r\n\r\n");
 		}
@@ -573,7 +574,7 @@ int8_t pattern_setup_dut0()
 		dut0.g_pattern_timer = 0x5fff;
 		dut0.g_lrd_pattern_step = 0;
 		dut0.g_lrd_pattern_num++;
-		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_lrd_pattern_num);
+		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_lrd_pattern_num, DUT0_PATTERN_LRD);
 		print("dut0 pattern_setup pass!\r\n\r\n\r\n");
 
 		break;

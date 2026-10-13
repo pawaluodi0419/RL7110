@@ -39,7 +39,7 @@ int main()
 
     init_platform();
 
-    print("FT2 start!\r\nFPGA Version:RTS5468_FT_merge_first_release_2026093002\r\n");
+    print("FT2 start!\r\nFPGA Version:RTS5468_FT_merge_first_release_2026101201\r\n");
 
     pattern_initial_state_dut0();
 
@@ -210,8 +210,16 @@ int main()
 			{
 				case 0x00:
 				{
-					ret = pattern_setup_dut0();
-					break;
+					if(xgpio_read_bit(DUT0_GPIO_1_ADDR, 0, 9) == 0)
+					{
+						ret = pattern_setup_dut0();
+						break;
+					}
+					else
+					{
+						ret = pattern_efuse_check_dut0();
+						break;
+					}
 				}
 				case 0x01:
 				{

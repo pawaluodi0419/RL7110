@@ -82,17 +82,26 @@ uint32_t xgpio_read_bit(uint32_t xgpio_baseaddr, uint8_t xgpio_ch, uint8_t xgpio
 	}
 }
 
-void result_output_for_v50(uint32_t xgpio_baseaddr, uint8_t result_data)
+void result_output_for_v50(uint32_t xgpio_baseaddr, uint8_t result_data, uint8_t is_typec)
 {
     uint8_t ch_idx = 0;
-    uint32_t mask = 0x1F << 10;
+    uint32_t mask = 0x1F << 10;		//bit[14:10]: 5bit written to tester
     uint32_t tri;
+    uint8_t data;
 
     tri = XGpio_ReadReg(xgpio_baseaddr, XGPIO_TRI_OFFSET);
     XGpio_WriteReg(xgpio_baseaddr, XGPIO_TRI_OFFSET, tri & ~mask);
 
+    //type-c pattern runs in parallel with lrd pattern, so physical bit14(field bit[4])
+    //is used as the type-c mark; special codes 0x1d/0x1e/0x1f stay above type-c range
+    data = result_data & 0x1F;
+    if(is_typec)
+    {
+        data |= DUT0_PATTERN_TYPEC_FLAG;
+    }
+
     dut0.g_gpio_1_shadow_state[ch_idx] &= ~mask;
-    dut0.g_gpio_1_shadow_state[ch_idx] |= ((uint32_t)(result_data & 0x1F) << 10);
+    dut0.g_gpio_1_shadow_state[ch_idx] |= ((uint32_t)data << 10);
 
     XGpio_WriteReg(xgpio_baseaddr, XGPIO_DATA_OFFSET, dut0.g_gpio_1_shadow_state[ch_idx]);
 }

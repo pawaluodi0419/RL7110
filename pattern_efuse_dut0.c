@@ -82,7 +82,7 @@ int8_t pattern_efuse_dut0()
 		write_data.bits.vcon_sw_uvlo_valid      = 1;																	//Byte 3 [5]
 		write_data.bits.lrd_rterm_valid      	= 1;																	//Byte 3 [6]
 
-		if(read_data.bytes[0] != 0)
+		if(((read_data.bytes[1] & 0x07) == 3) || ((read_data.bytes[1] & 0x07) == 4) || ((read_data.bytes[1] & 0x07) == 5))
 		{
 			write_data.bits.cp_lrd_ldo_valid    = 1;																	//Byte 3 [7]
 		}
@@ -709,8 +709,8 @@ int8_t pattern_efuse_dut0()
 
 	case 0x05:
 	{
-		dut0.g_lrd_pattern_num = 0x0c;
-		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_lrd_pattern_num);
+		dut0.g_lrd_pattern_num = 0x1e;
+		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_lrd_pattern_num, DUT0_PATTERN_LRD);
 
 		dut0.g_pass_cnt++;
 		xil_printf("dut0.g_test_cnt = %d, dut0.g_pass_cnt = %d\r\n\r\n", dut0.g_test_cnt, dut0.g_pass_cnt);

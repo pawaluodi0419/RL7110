@@ -17,7 +17,7 @@ void xgpio_intrq_handle_dut0()
 	{
 		uint8_t current_pattern = dut0.g_lrd_pattern_num;
 
-		if((current_pattern == 0x1f) || (current_pattern == 0x0c) || (current_pattern == 0x0e))
+		if((current_pattern == 0x1f) || (current_pattern == 0x1e) || (current_pattern == 0x1d))
 		{
 			dut0.g_ft2_start_ready = 0x11;
 		}

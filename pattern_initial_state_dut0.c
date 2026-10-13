@@ -62,7 +62,7 @@ void pattern_initial_state_dut0()
 	dut0.g_pn_offset_test_cnt = 1;
 
 	//FW version
-	result_output_for_v50(DUT0_GPIO_1_ADDR, FT_FW_VER);
+	result_output_for_v50(DUT0_GPIO_1_ADDR, FT_FW_VER, DUT0_PATTERN_LRD);
 
 	GPI_DIS_WRITE_REG(DUT0_GPI_DIS_ADDR, 0 , 0x60000000);
 	GPI_DIS_WRITE_REG(DUT0_GPI_DIS_ADDR, 4 , 0x00020300);

@@ -139,12 +139,12 @@ typedef union{
 
     struct{
         //Byte 0
-        uint8_t cp_lrd_ldo        		: 3;
-        uint8_t reserved_3_7           	: 5;
-
-        //Byte 1
         uint8_t ft_lrd_version   		: 4;
         uint8_t ft_type_c_version      	: 4;
+
+        //Byte 1
+        uint8_t cp_lrd_ldo        		: 3;
+        uint8_t reserved_11_15          : 5;
 
         //Byte 2
         uint8_t efuse_data_valid        : 1;

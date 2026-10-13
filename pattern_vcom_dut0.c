@@ -111,7 +111,7 @@ int8_t pattern_vcom_dut0()
 		dut0.g_pattern_timer = 0x5fff;
 		dut0.g_lrd_pattern_step = 0;
 		dut0.g_lrd_pattern_num++;
-		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_lrd_pattern_num);
+		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_lrd_pattern_num, DUT0_PATTERN_LRD);
 		print("dut0_pattern_vcom_pass!\r\n\r\n\r\n");
 
 		break;

@@ -10,6 +10,9 @@ int8_t pattern_vcon_sw_scp_dut0()
 
 	int8_t ret;
 
+	/* trim: CC1/CC2 scan i desc(15->0), write i to reg0x06[11:8]/[7:4],
+	 * read cc adc, record i with min |adc - target|, target 500->250mA offset / 800->400mA offset, offset = i;
+	 * no fail in scan, always pick closest within 15..0 */
 	switch(dut0.g_type_c_pattern_step)
 	{
 	case 0x00:
@@ -240,7 +243,7 @@ int8_t pattern_vcon_sw_scp_dut0()
 		dut0.g_pattern_timer = 0x5fff;
 		dut0.g_type_c_pattern_step = 0;
 		dut0.g_type_c_pattern_num++;
-		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num);
+		result_output_for_v50(DUT0_GPIO_1_ADDR, dut0.g_type_c_pattern_num, DUT0_PATTERN_TYPEC);
 		print("dut0 pattern_vcon_sw_scp pass!\r\n\r\n\r\n");
 
 		break;

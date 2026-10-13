@@ -16,7 +16,7 @@ void platform_initial()
 			dut0.g_lrd_pattern_num = 0;
 			dut0.g_type_c_pattern_num = 0;
 
-			result_output_for_v50(DUT0_GPIO_1_ADDR, FT_FW_VER);						//write ready code
+			result_output_for_v50(DUT0_GPIO_1_ADDR, FT_FW_VER, DUT0_PATTERN_LRD);	//write ready code
 
 			dut0.g_ft2_start_ready = 1;
 			dut0.g_ft2_test_done = 0;
@@ -31,7 +31,7 @@ void platform_initial()
 			dut0.g_lrd_pattern_num = 0;
 			dut0.g_type_c_pattern_num = 0;
 
-			result_output_for_v50(DUT0_GPIO_1_ADDR, FT_FW_VER);						//write ready code
+			result_output_for_v50(DUT0_GPIO_1_ADDR, FT_FW_VER, DUT0_PATTERN_LRD);	//write ready code
 
 			dut0.g_ft2_start_ready = 1;
 			dut0.g_ft2_test_done = 0;

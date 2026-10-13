@@ -101,6 +101,10 @@ typedef void (*reset_function_t)();
 
 #define	FT_FW_VER	1
 
+#define	DUT0_PATTERN_TYPEC_FLAG	0x10	//5bit field bit[4](physical bit14): type-c flow mark
+#define	DUT0_PATTERN_TYPEC		1		//type-c flow
+#define	DUT0_PATTERN_LRD		0		//lrd flow
+
 typedef struct{
 	uint8_t g_ft2_start_ready;
 	uint8_t g_ft2_test_done;
